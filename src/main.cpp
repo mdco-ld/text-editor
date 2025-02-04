@@ -20,9 +20,15 @@ int main() {
 	ui::Base::goTo(1, 1);
 	ui::Base::present();
     while (true) {
-        read(STDIN_FILENO, &c, 1);
-		if (c == 'q') {
-			break;
+        if (read(STDIN_FILENO, &c, 1) > 0) {
+			if (c == 'q') {
+				break;
+			}
+			std::string s;
+			s += c;
+			s += "\r\n";
+			ui::Base::print(s);
+			ui::Base::present();
 		}
     }
     return 0;

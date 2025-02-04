@@ -11,6 +11,8 @@ class Base {
 
     static void goTo(int x, int y);
 
+	static void print(std::string_view str);
+
     static void present();
 
   private:
