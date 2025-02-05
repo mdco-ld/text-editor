@@ -1,9 +1,10 @@
+#include "buffer.hpp"
+#include "utils.hpp"
 #include <terminal.hpp>
 #include <ui/base.hpp>
 
-#include <unistd.h>
-
 #include <iostream>
+#include <unistd.h>
 
 int main() {
     if (!isatty(STDOUT_FILENO)) {
@@ -15,10 +16,16 @@ int main() {
         return 0;
     }
     Terminal::init();
-    char c;
     ui::Base::clear();
     ui::Base::goTo(1, 1);
-    ui::Base::present();
+	auto text = utils::readFile("/home/miguel/.bashrc", true);
+	auto buffer = editor::Buffer(text);
+	for (size_t i = 0; i < std::min(buffer.getNumLines(), 15ul); i++) {
+		ui::Base::print(buffer.getLine(i));
+		ui::Base::print("\r\n");
+	}
+	ui::Base::present();
+    char c;
     while (true) {
         if (read(STDIN_FILENO, &c, 1) > 0) {
             if (c == 'q') {

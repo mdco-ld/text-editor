@@ -13,6 +13,10 @@ set(SOURCES
 	include/terminal.hpp
 	src/ui/base.cpp
 	include/ui/base.hpp
+	src/buffer.cpp
+	include/buffer.hpp
+	src/utils.cpp
+	include/utils.hpp
 )
 
 add_executable(editor ${SOURCES})
