@@ -25,7 +25,7 @@ int main() {
                 break;
             }
             std::string s;
-            s += c;
+            s += std::to_string(c);
             s += "\r\n";
             ui::Base::print(s);
             ui::Base::present();

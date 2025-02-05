@@ -13,6 +13,9 @@ class Base {
 
 	static void print(std::string_view str);
 
+	static int getWidth();
+	static int getHeight();
+
     static void present();
 
   private:
