@@ -19,6 +19,8 @@ set(SOURCES
 	include/utils.hpp
 	src/logger.cpp
 	include/logger.hpp
+	src/input/base.cpp
+	include/input/base.hpp
 )
 
 add_executable(editor ${SOURCES})

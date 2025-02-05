@@ -9,7 +9,7 @@ std::string_view getLogFile() {
 
 Logger::Logger() : logFile_(getLogFile().data(), std::ios::app) {}
 
-Logger::~Logger() { std::cerr << deferred_.str() << std::endl; }
+Logger::~Logger() { std::cerr << deferred_.str(); }
 
 Logger &Logger::get() {
     static Logger instance;
