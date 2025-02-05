@@ -17,10 +17,12 @@ set(SOURCES
 	include/buffer.hpp
 	src/utils.cpp
 	include/utils.hpp
+	src/logger.cpp
+	include/logger.hpp
 )
 
 add_executable(editor ${SOURCES})
 
 include_directories(include)
 
-target_compile_options(editor PRIVATE -Wall -Wextra -pedantic -Werror)
+target_compile_options(editor PRIVATE -Wall -Wextra -pedantic -Werror -DDEVELOPMENT)

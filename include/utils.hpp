@@ -7,6 +7,6 @@ namespace utils {
 
 std::string readFile(std::string_view filepath, bool noThrow = false);
 
-};
+}; // namespace utils
 
 #endif

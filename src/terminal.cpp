@@ -1,4 +1,5 @@
 #include <terminal.hpp>
+#include <logger.hpp>
 
 #include <termios.h>
 #include <unistd.h>
@@ -6,6 +7,9 @@
 static termios g_originalTermios;
 
 Terminal::Terminal() {
+	// Make sure logger is initialized before the terminal
+	Logger::get();
+
     write(STDOUT_FILENO, "\x1b[?1049h", sizeof("\x1b[?1049h"));
     tcgetattr(STDOUT_FILENO, &g_originalTermios);
 
