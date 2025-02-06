@@ -1,26 +1,24 @@
 #ifndef _UI_BASE_HPP_
 #define _UI_BASE_HPP_
 
-#include <string>
+#include <string_view>
 
 namespace ui {
 
-class Base {
-  public:
-    static void clear();
+namespace base {
 
-    static void goTo(int x, int y);
+void clear();
 
-	static void print(std::string_view str);
+void goTo(int x, int y);
 
-	static int getWidth();
-	static int getHeight();
+void print(std::string_view str);
 
-    static void present();
+int getWidth();
+int getHeight();
 
-  private:
-    static std::string buffer_;
-};
+void present();
+
+}; // namespace base
 
 }; // namespace ui
 

@@ -2,30 +2,36 @@
 
 #include <expected>
 #include <sstream>
+#include <string>
 #include <sys/ioctl.h>
 #include <unistd.h>
 
-namespace ui {
-
 #define ESC "\x1b"
 
-void Base::clear() { buffer_ += ESC "[2J"; }
+namespace ui {
 
-void Base::goTo(int x, int y) {
+namespace base {
+
+// TODO: Make this thread-safe
+static std::string g_buffer;
+
+void clear() { g_buffer += ESC "[2J"; }
+
+void goTo(int x, int y) {
     std::stringstream ss;
     ss << '[' << y << ';' << x << 'H';
-    buffer_ += ESC;
-    buffer_ += ss.str();
+    g_buffer += ESC;
+    g_buffer += ss.str();
 }
 
-void Base::print(std::string_view str) { buffer_ += str; }
+void print(std::string_view str) { g_buffer += str; }
 
-void Base::present() {
-    write(STDOUT_FILENO, buffer_.data(), buffer_.size());
-    buffer_.clear();
+void present() {
+    write(STDOUT_FILENO, g_buffer.data(), g_buffer.size());
+    g_buffer.clear();
 }
 
-int Base::getWidth() {
+int getWidth() {
     winsize ws;
 
     if (ioctl(STDOUT_FILENO, TIOCSWINSZ, &ws) == -1 || ws.ws_col == 0) {
@@ -34,7 +40,7 @@ int Base::getWidth() {
     return ws.ws_col;
 }
 
-int Base::getHeight() {
+int getHeight() {
     winsize ws;
 
     if (ioctl(STDOUT_FILENO, TIOCSWINSZ, &ws) == -1 || ws.ws_row == 0) {
@@ -43,6 +49,6 @@ int Base::getHeight() {
     return ws.ws_row;
 }
 
-std::string Base::buffer_;
+} // namespace base
 
 }; // namespace ui

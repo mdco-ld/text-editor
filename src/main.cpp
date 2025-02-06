@@ -20,9 +20,9 @@ int main() {
     }
     try {
         Terminal::init();
-        ui::Base::clear();
-        ui::Base::goTo(1, 1);
-        ui::Base::present();
+        ui::base::clear();
+        ui::base::goTo(1, 1);
+        ui::base::present();
         while (true) {
             auto key = input::readKey();
             if (key) {
@@ -31,9 +31,9 @@ int main() {
                 }
                 std::stringstream ss;
                 ss << key << "\r\n";
-                ui::Base::print(ss.str());
+                ui::base::print(ss.str());
             }
-            ui::Base::present();
+            ui::base::present();
         }
     } catch (std::runtime_error &e) {
         Logger::get().printlnAtExit(e.what());
