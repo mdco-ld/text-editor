@@ -34,9 +34,7 @@ Key::Key(char c) : value(c) {}
 
 Key::operator bool() { return value != 0; }
 
-bool Key::operator==(Key other) {
-	return value == other.value;
-}
+bool Key::operator==(Key other) { return value == other.value; }
 
 Key &Key::setCtrl(bool ctrl) {
     if (ctrl) {
@@ -141,49 +139,49 @@ std::ostream &operator<<(std::ostream &out, Key key) {
     if (key.getChar() != 0) {
         return out << key.getChar();
     }
-	switch (key.getSpecialChar()) {
-		case Key::Special::None:
-			return out << "NoKey";
-			break;
-		case Key::Special::Space:
-			return out << "Space";
-			break;
-		case Key::Special::Enter:
-			return out << "Enter";
-			break;
-		case Key::Special::Tab:
-			return out << "Tab";
-			break;
-		case Key::Special::Backspace:
-			return out << "Backspace";
-			break;
-		case Key::Special::Insert:
-			return out << "Insert";
-			break;
-		case Key::Special::Delete:
-			return out << "Delete";
-			break;
-		case Key::Special::Home:
-			return out << "Home";
-			break;
-		case Key::Special::End:
-			return out << "End";
-			break;
-		case Key::Special::Down:
-			return out << "Down";
-			break;
-		case Key::Special::Up:
-			return out << "Up";
-			break;
-		case Key::Special::Left:
-			return out << "Left";
-			break;
-		case Key::Special::Right:
-			return out << "Right";
-			break;
-	}
-	LOG_ERROR("Somehow we reached unreachable code");
-	return out;
+    switch (key.getSpecialChar()) {
+    case Key::Special::None:
+        return out << "NoKey";
+        break;
+    case Key::Special::Space:
+        return out << "Space";
+        break;
+    case Key::Special::Enter:
+        return out << "Enter";
+        break;
+    case Key::Special::Tab:
+        return out << "Tab";
+        break;
+    case Key::Special::Backspace:
+        return out << "Backspace";
+        break;
+    case Key::Special::Insert:
+        return out << "Insert";
+        break;
+    case Key::Special::Delete:
+        return out << "Delete";
+        break;
+    case Key::Special::Home:
+        return out << "Home";
+        break;
+    case Key::Special::End:
+        return out << "End";
+        break;
+    case Key::Special::Down:
+        return out << "Down";
+        break;
+    case Key::Special::Up:
+        return out << "Up";
+        break;
+    case Key::Special::Left:
+        return out << "Left";
+        break;
+    case Key::Special::Right:
+        return out << "Right";
+        break;
+    }
+    LOG_ERROR("Somehow we reached unreachable code");
+    return out;
 }
 
 }; // namespace input

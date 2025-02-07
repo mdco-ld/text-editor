@@ -1,5 +1,5 @@
-#include <terminal.hpp>
 #include <logger.hpp>
+#include <terminal.hpp>
 #include <ui/base.hpp>
 
 #include <termios.h>
@@ -8,8 +8,8 @@
 static termios g_originalTermios;
 
 Terminal::Terminal() {
-	// Make sure logger is initialized before the terminal
-	Logger::get();
+    // Make sure logger is initialized before the terminal
+    Logger::get();
 
     write(STDOUT_FILENO, "\x1b[?1049h", sizeof("\x1b[?1049h"));
     tcgetattr(STDOUT_FILENO, &g_originalTermios);
@@ -27,7 +27,7 @@ Terminal::Terminal() {
 }
 
 Terminal::~Terminal() {
-	ui::base::showCursor();
+    ui::base::showCursor();
     write(STDOUT_FILENO, "\x1b[?1049l", sizeof("\x1b[?1049l"));
     tcsetattr(STDOUT_FILENO, TCSAFLUSH, &g_originalTermios);
 }

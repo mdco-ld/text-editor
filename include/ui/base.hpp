@@ -1,8 +1,8 @@
 #ifndef _UI_BASE_HPP_
 #define _UI_BASE_HPP_
 
-#include <string_view>
 #include <cstdint>
+#include <string_view>
 
 namespace ui {
 
@@ -27,19 +27,19 @@ void present();
 namespace color {
 
 struct RGB {
-	uint8_t r;
-	uint8_t g;
-	uint8_t b;
+    uint8_t r;
+    uint8_t g;
+    uint8_t b;
 };
 
-};
+}; // namespace color
 
 namespace base {
 
 void colorFg(color::RGB col);
 void colorBg(color::RGB col);
 
-};
+}; // namespace base
 
 }; // namespace ui
 

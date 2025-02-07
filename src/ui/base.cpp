@@ -16,26 +16,24 @@ static std::string g_buffer;
 
 void clear() { g_buffer += ESC "[2J"; }
 
-void hideCursor() {
-	g_buffer += ESC "[?25l";
-}
+void hideCursor() { g_buffer += ESC "[?25l"; }
 
-void showCursor() {
-	g_buffer += ESC "[?25h";
-}
+void showCursor() { g_buffer += ESC "[?25h"; }
 
 void colorFg(color::RGB col) {
-	std::stringstream ss;
-	ss << "[38;2;" << (int)col.r << ';' << (int)col.g << ';' << (int)col.b << 'm';
-	g_buffer += ESC;
-	g_buffer += ss.str();
+    std::stringstream ss;
+    ss << "[38;2;" << (int)col.r << ';' << (int)col.g << ';' << (int)col.b
+       << 'm';
+    g_buffer += ESC;
+    g_buffer += ss.str();
 }
 
 void colorBg(color::RGB col) {
-	std::stringstream ss;
-	ss << "[48;2;" << (int)col.r << ';' << (int)col.g << ';' << (int)col.b << 'm';
-	g_buffer += ESC;
-	g_buffer += ss.str();
+    std::stringstream ss;
+    ss << "[48;2;" << (int)col.r << ';' << (int)col.g << ';' << (int)col.b
+       << 'm';
+    g_buffer += ESC;
+    g_buffer += ss.str();
 }
 
 void goTo(int x, int y) {
