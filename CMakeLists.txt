@@ -8,7 +8,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 set(SOURCES
-    src/main.cpp
+	src/main.cpp
 	src/terminal.cpp
 	include/terminal.hpp
 	src/ui/base.cpp
@@ -23,11 +23,10 @@ set(SOURCES
 	include/input/base.hpp
 	src/ui/box.cpp
 	include/ui/box.hpp
-  src/ui/status.cpp
+	src/ui/status.cpp
 	include/ui/status.hpp
-  src/ui/buffer.cpp
+	src/ui/buffer.cpp
 	include/ui/buffer.hpp
-
 )
 
 add_executable(editor ${SOURCES})

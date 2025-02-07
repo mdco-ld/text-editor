@@ -1,13 +1,12 @@
 #ifndef _UI_BUFFER_HPP_
 #define _UI_BUFFER_HPP_
 
-#include <string>
-#include <vector>
+#include <buffer.hpp>
 
 namespace ui {
 
-void drawBuffer(std::vector<std::string> &buffer, int init_buff, int x, int y,
-                int max_column, int height);
+void drawBuffer(editor::Buffer &buffer, size_t x, size_t y, size_t startLine,
+                size_t maxWidth, size_t maxHeight);
 
 }
 

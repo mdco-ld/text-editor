@@ -4,20 +4,18 @@
 
 namespace ui {
 
-void drawBuffer(std::vector<std::string> &buffer, int init_buff, int x, int y,
-                int max_column, int height) {
+void drawBuffer(editor::Buffer &buffer, size_t x, size_t y, size_t startLine,
+                size_t maxWidth, size_t maxHeight) {
 
-    for (int i = 0;
-         i < height && i + init_buff < static_cast<int>(buffer.size()); i++) {
-
-        base::goTo(x, y + i);
-        std::basic_string buf = "";
-        for (int j = 0; j < max_column &&
-                        j < static_cast<int>(buffer[i + init_buff].size());
-             j++) {
-            buf += buffer[i + init_buff][j];
+    for (size_t offset = 0;
+         startLine + offset < buffer.getNumLines() && offset < maxHeight;
+         offset++) {
+        auto line = buffer.getLine(startLine + offset);
+        if (line.size() > maxWidth) {
+            line = line.substr(0, maxWidth);
         }
-        base::print(buf);
+        ui::base::goTo(x, y + offset);
+        ui::base::print(line);
     }
 }
 
