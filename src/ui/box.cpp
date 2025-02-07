@@ -21,7 +21,7 @@ void drawBox(int x, int y, int w, int h) {
 	base::print(TOP_RIGHT);
 	base::goTo(x, y + h - 1);
 	base::print(BOTTOM_LEFT);
-	for (int i = 1; i < h - 1; i++) {
+	for (int i = 1; i < w - 1; i++) {
 		base::print(HORIZONTAL);
 	}
 	base::print(BOTTOM_RIGHT);

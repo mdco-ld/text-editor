@@ -28,7 +28,7 @@ int main() {
         while (true) {
             auto key = input::readKey();
 			ui::base::clear();
-			ui::drawBox(1, 1, 30, 30, "title");
+			ui::drawBox(1, 1, 90, 30, "title");
 			ui::base::goTo(2, 2);
             if (key) {
                 if (key == input::Key{'q'}.setCtrl(true)) {
