@@ -6,6 +6,7 @@
 #include <ui/base.hpp>
 #include <utils.hpp>
 #include <ui/box.hpp>
+#include <ui/status.hpp>
 
 #include <iostream>
 #include <unistd.h>
@@ -31,6 +32,7 @@ int main() {
 			ui::base::colorFg({100, 200, 255});
 			ui::drawBox(1, 1, 90, 30, "title");
 			ui::base::colorFg({255, 255, 255});
+      ui::drawStatus(1, 31, 90, "Normal", 100, text.size() +1);
 			ui::base::goTo(2, 2);
             if (key) {
                 if (key == input::Key{'q'}.setCtrl(true)) {

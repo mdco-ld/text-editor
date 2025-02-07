@@ -23,6 +23,8 @@ set(SOURCES
 	include/input/base.hpp
 	src/ui/box.cpp
 	include/ui/box.hpp
+  src/ui/status.cpp
+	include/ui/status.hpp
 )
 
 add_executable(editor ${SOURCES})
