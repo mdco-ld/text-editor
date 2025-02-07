@@ -25,6 +25,9 @@ set(SOURCES
 	include/ui/box.hpp
   src/ui/status.cpp
 	include/ui/status.hpp
+  src/ui/buffer.cpp
+	include/ui/buffer.hpp
+
 )
 
 add_executable(editor ${SOURCES})
