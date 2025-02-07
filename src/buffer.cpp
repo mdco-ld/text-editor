@@ -1,4 +1,7 @@
 #include <buffer.hpp>
+#include <ui/base.hpp>
+#include <ui/rect.hpp>
+#include <logger.hpp>
 
 #include <cassert>
 
@@ -53,6 +56,17 @@ const std::string_view Buffer::getLinePart(size_t lineNum, size_t start,
 
 [[nodiscard]] size_t Buffer::getNumLines() const noexcept {
     return lines_.size();
+}
+
+void Buffer::draw(size_t startOffset, ui::Rect rect) {
+    for (size_t offset = 0; startOffset + offset < lines_.size() && offset < rect.h; offset++) {
+        auto line = getLine(startOffset + offset);
+        if (line.size() > rect.w) {
+            line = line.substr(0, rect.w);
+        }
+        ui::base::goTo(rect.x, rect.y + offset);
+        ui::base::print(line);
+    }
 }
 
 }; // namespace editor

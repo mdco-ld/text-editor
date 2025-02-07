@@ -4,7 +4,6 @@
 #include <terminal.hpp>
 #include <ui/base.hpp>
 #include <ui/box.hpp>
-#include <ui/buffer.hpp>
 #include <ui/status.hpp>
 #include <utils.hpp>
 
@@ -33,13 +32,12 @@ int main() {
             ui::base::colorFg({100, 200, 255});
             ui::drawBox(1, 1, 90, 30, "title");
             ui::base::colorFg({255, 255, 255});
-            ui::base::goTo(2, 2);
             if (key) {
                 if (key == input::Key{'q'}.setCtrl(true)) {
                     break;
                 }
             }
-            ui::drawBuffer(buffer, 2, 2, 0, 88, 28);
+            buffer.draw(0, {2, 2, 88, 28});
             ui::base::goTo(2, 2);
             ui::base::present();
         }

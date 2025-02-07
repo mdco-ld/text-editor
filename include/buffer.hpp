@@ -4,6 +4,8 @@
 #include <string>
 #include <vector>
 
+#include <ui/rect.hpp>
+
 namespace editor {
 
 class Buffer {
@@ -19,6 +21,8 @@ class Buffer {
                                        size_t maxLength) const;
 
     [[nodiscard]] size_t getNumLines() const noexcept;
+
+    void draw(size_t startOffset, ui::Rect rect);
 
   private:
     // TODO: Refactor to use a splay tree instead of std::vector
