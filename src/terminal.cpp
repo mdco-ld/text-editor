@@ -1,5 +1,6 @@
 #include <terminal.hpp>
 #include <logger.hpp>
+#include <ui/base.hpp>
 
 #include <termios.h>
 #include <unistd.h>
@@ -26,6 +27,7 @@ Terminal::Terminal() {
 }
 
 Terminal::~Terminal() {
+	ui::base::showCursor();
     write(STDOUT_FILENO, "\x1b[?1049l", sizeof("\x1b[?1049l"));
     tcsetattr(STDOUT_FILENO, TCSAFLUSH, &g_originalTermios);
 }

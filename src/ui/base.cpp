@@ -1,6 +1,5 @@
 #include <ui/base.hpp>
 
-#include <expected>
 #include <sstream>
 #include <string>
 #include <sys/ioctl.h>
@@ -16,6 +15,14 @@ namespace base {
 static std::string g_buffer;
 
 void clear() { g_buffer += ESC "[2J"; }
+
+void hideCursor() {
+	g_buffer += ESC "[?25l";
+}
+
+void showCursor() {
+	g_buffer += ESC "[?25h";
+}
 
 void goTo(int x, int y) {
     std::stringstream ss;

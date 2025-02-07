@@ -5,6 +5,7 @@
 #include <terminal.hpp>
 #include <ui/base.hpp>
 #include <utils.hpp>
+#include <ui/box.hpp>
 
 #include <iostream>
 #include <unistd.h>
@@ -23,16 +24,29 @@ int main() {
         ui::base::clear();
         ui::base::goTo(1, 1);
         ui::base::present();
+		std::string text;
         while (true) {
             auto key = input::readKey();
+			ui::base::clear();
+			ui::drawBox(1, 1, 30, 30, "title");
+			ui::base::goTo(2, 2);
             if (key) {
                 if (key == input::Key{'q'}.setCtrl(true)) {
                     break;
                 }
-                std::stringstream ss;
-                ss << key << "\r\n";
-                ui::base::print(ss.str());
+				if (key == input::Key::Special::Backspace) {
+					if (text.size() > 0) {
+						text.pop_back();
+					}
+				} else if (key == input::Key::Special::Space) {
+					text += ' ';
+				} else {
+					std::stringstream ss;
+					ss << key;
+					text += ss.str();
+				}
             }
+			ui::base::print(text);
             ui::base::present();
         }
     } catch (std::runtime_error &e) {

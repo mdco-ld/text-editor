@@ -9,6 +9,9 @@ namespace base {
 
 void clear();
 
+void hideCursor();
+void showCursor();
+
 void goTo(int x, int y);
 
 void print(std::string_view str);
