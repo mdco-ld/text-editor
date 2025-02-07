@@ -6,12 +6,13 @@
 namespace ui {
 
 struct Rect {
-	size_t x;
-	size_t y;
-	size_t w;
-	size_t h;
+    size_t x;
+    size_t y;
+    size_t w;
+    size_t h;
+    Rect subrect(Rect rect);
 };
 
-};
+}; // namespace ui
 
 #endif

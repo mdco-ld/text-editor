@@ -6,6 +6,7 @@
 #include <ui/box.hpp>
 #include <ui/status.hpp>
 #include <utils.hpp>
+#include <window.hpp>
 
 #include <iostream>
 #include <unistd.h>
@@ -21,24 +22,34 @@ int main() {
     }
     try {
         Terminal::init();
-        ui::base::clear();
-        ui::base::goTo(1, 1);
-        ui::base::present();
         auto text = utils::readFile("CMakeLists.txt");
-        auto buffer = editor::Buffer(text);
+        auto window = editor::Window(text);
+        ui::base::clear();
+        ui::base::present();
+        window.draw({1, 1, 90, 30});
         while (true) {
             auto key = input::readKey();
-            ui::base::clear();
-            ui::base::colorFg({100, 200, 255});
-            ui::drawBox(1, 1, 90, 30, "title");
-            ui::base::colorFg({255, 255, 255});
             if (key) {
                 if (key == input::Key{'q'}.setCtrl(true)) {
                     break;
                 }
+                if (key == input::Key{'j'}) {
+                    window.goDown();
+                }
+                if (key == input::Key{'k'}) {
+                    window.goUp();
+                }
+                if (key == input::Key{'h'}) {
+                    window.goLeft();
+                }
+                if (key == input::Key{'l'}) {
+                    window.goRight();
+                }
             }
-            buffer.draw(0, {2, 2, 88, 28});
-            ui::base::goTo(2, 2);
+            ui::base::clear();
+            window.draw({1, 1, 90, 30});
+            ui::base::goTo(window.getCursorPosition().x + 1,
+                           window.getCursorPosition().y + 1);
             ui::base::present();
         }
     } catch (std::runtime_error &e) {

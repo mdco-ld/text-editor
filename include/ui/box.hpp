@@ -1,12 +1,13 @@
 #ifndef _UI_BOX_HPP_
 #define _UI_BOX_HPP_
 
+#include "ui/rect.hpp"
 #include <string_view>
 
 namespace ui {
 
-void drawBox(int x, int y, int w, int h);
-void drawBox(int x, int y, int w, int h, std::string_view label);
+void drawBox(ui::Rect rect);
+void drawBox(ui::Rect rect, std::string_view label);
 
 }; // namespace ui
 
