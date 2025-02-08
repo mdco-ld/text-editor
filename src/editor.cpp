@@ -24,8 +24,9 @@ void Editor::openFile(std::string_view filePath) {
 }
 
 void Editor::draw() {
-    size_t w = ui::base::getWidth();
-    size_t h = ui::base::getHeight();
+    static size_t w = 90;
+    static size_t h = 30;
+    ui::base::getWindowSize(w, h);
     if (!activeWindowId_.has_value()) {
         return;
     }

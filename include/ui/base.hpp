@@ -17,8 +17,7 @@ void goTo(int x, int y);
 
 void print(std::string_view str);
 
-int getWidth();
-int getHeight();
+bool getWindowSize(size_t &width, size_t &height);
 
 void present();
 

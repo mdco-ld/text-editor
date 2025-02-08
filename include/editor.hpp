@@ -15,6 +15,7 @@ class Editor {
         Normal,
         Edit,
         Command,
+        Search,
     };
 
     Editor();

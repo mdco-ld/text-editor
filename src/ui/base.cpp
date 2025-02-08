@@ -51,24 +51,15 @@ void present() {
     g_buffer.clear();
 }
 
-int getWidth() {
+bool getWindowSize(size_t &width, size_t &height) {
     winsize ws;
 
-    if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &ws) != 0 || ws.ws_col == 0) {
-        LOG_ERROR("Failed to get width");
-        return -1;
+    if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &ws) == -1 || ws.ws_row == 0) {
+        return false;
     }
-    return ws.ws_col;
-}
-
-int getHeight() {
-    winsize ws;
-
-    if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &ws) != 0 || ws.ws_row == 0) {
-        LOG_ERROR("Failed to get height");
-        return -1;
-    }
-    return ws.ws_row;
+    width = ws.ws_col;
+    height = ws.ws_row;
+    return true;
 }
 
 } // namespace base
