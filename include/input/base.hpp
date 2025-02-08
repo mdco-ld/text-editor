@@ -26,6 +26,7 @@ struct Key {
         Up = 10u << 8,
         Left = 11u << 8,
         Right = 12u << 8,
+        Esc = 13u << 8,
     };
 
     bool getCtrl();

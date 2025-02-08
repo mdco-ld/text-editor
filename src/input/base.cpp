@@ -84,8 +84,7 @@ Key readKey() {
     if (c == 27) {
         alt = true;
         if (!readChar(c, inputs)) {
-            LOG_DEBUG("Unrecognized input sequence: {}", stringify(inputs));
-            return Key{};
+			return Key::Special::Esc;
         }
         if (c == 91) {
             if (readChar(c, inputs)) {
@@ -142,43 +141,32 @@ std::ostream &operator<<(std::ostream &out, Key key) {
     switch (key.getSpecialChar()) {
     case Key::Special::None:
         return out << "NoKey";
-        break;
     case Key::Special::Space:
         return out << "Space";
-        break;
     case Key::Special::Enter:
         return out << "Enter";
-        break;
     case Key::Special::Tab:
         return out << "Tab";
-        break;
     case Key::Special::Backspace:
         return out << "Backspace";
-        break;
     case Key::Special::Insert:
         return out << "Insert";
-        break;
     case Key::Special::Delete:
         return out << "Delete";
-        break;
     case Key::Special::Home:
         return out << "Home";
-        break;
     case Key::Special::End:
         return out << "End";
-        break;
     case Key::Special::Down:
         return out << "Down";
-        break;
     case Key::Special::Up:
         return out << "Up";
-        break;
     case Key::Special::Left:
         return out << "Left";
-        break;
     case Key::Special::Right:
         return out << "Right";
-        break;
+	case Key::Special::Esc:
+		return out << "Esc";
     }
     LOG_ERROR("Somehow we reached unreachable code");
     return out;
