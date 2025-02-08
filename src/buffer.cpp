@@ -9,7 +9,9 @@ namespace editor {
 
 Buffer::Buffer() { lines_.push_back(""); }
 
-Buffer::Buffer(std::string_view content) {
+Buffer::Buffer(std::string_view content) { setContent(content); }
+
+void Buffer::setContent(std::string_view content) {
     for (size_t pos = 0, lineStart = 0; pos < content.size(); pos++) {
         if (content[pos] == '\n') {
             lines_.push_back(

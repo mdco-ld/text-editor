@@ -22,6 +22,8 @@ class Buffer {
 
     [[nodiscard]] size_t getNumLines() const noexcept;
 
+    void setContent(std::string_view content);
+
     void draw(size_t startOffset, ui::Rect rect);
 
   private:

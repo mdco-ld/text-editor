@@ -4,10 +4,14 @@
 
 namespace editor {
 
-Window::Window() : buffer_(), cursor_(0, 0), offset_(0) {}
+Window::Window() : buffer_(), cursor_(0, 0), offset_(0), name_("") {}
 
-Window::Window(std::string_view content)
-    : buffer_(content), cursor_(0, 0), offset_(0) {}
+Window::Window(std::string_view name)
+    : buffer_(), cursor_(0, 0), offset_(0), name_(name) {}
+
+void Window::setContent(std::string_view content) {
+    buffer_.setContent(content);
+}
 
 void Window::goDown() {
     size_t numLines = buffer_.getNumLines();
@@ -47,7 +51,7 @@ void Window::goEnd() { cursor_.y = buffer_.getNumLines() - 1; }
 
 void Window::draw(ui::Rect rect) {
     ui::base::colorFg({100, 200, 255});
-    ui::drawBox(rect, "Window");
+    ui::drawBox(rect, name_.has_value() ? name_.value() : "<Unnamed>");
     ui::base::colorFg({255, 255, 255});
     ui::Rect bufferRect = rect.subrect({1, 1, rect.w - 2, rect.h - 2});
     if (cursor_.y - offset_ >= bufferRect.h) {

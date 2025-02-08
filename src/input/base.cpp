@@ -84,7 +84,7 @@ Key readKey() {
     if (c == 27) {
         alt = true;
         if (!readChar(c, inputs)) {
-			return Key::Special::Esc;
+            return Key::Special::Esc;
         }
         if (c == 91) {
             if (readChar(c, inputs)) {
@@ -165,8 +165,8 @@ std::ostream &operator<<(std::ostream &out, Key key) {
         return out << "Left";
     case Key::Special::Right:
         return out << "Right";
-	case Key::Special::Esc:
-		return out << "Esc";
+    case Key::Special::Esc:
+        return out << "Esc";
     }
     LOG_ERROR("Somehow we reached unreachable code");
     return out;

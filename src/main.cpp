@@ -1,3 +1,4 @@
+#include "editor.hpp"
 #include <buffer.hpp>
 #include <input/base.hpp>
 #include <logger.hpp>
@@ -22,34 +23,19 @@ int main() {
     }
     try {
         Terminal::init();
-        auto text = utils::readFile("CMakeLists.txt");
-        auto window = editor::Window(text);
         ui::base::clear();
         ui::base::present();
-        window.draw({1, 1, 90, 30});
+        editor::Editor editor;
+        editor.openFile("CMakeLists.txt");
         while (true) {
             auto key = input::readKey();
             if (key) {
                 if (key == input::Key{'q'}.setCtrl(true)) {
                     break;
                 }
-                if (key == input::Key{'j'}) {
-                    window.goDown();
-                }
-                if (key == input::Key{'k'}) {
-                    window.goUp();
-                }
-                if (key == input::Key{'h'}) {
-                    window.goLeft();
-                }
-                if (key == input::Key{'l'}) {
-                    window.goRight();
-                }
             }
             ui::base::clear();
-            window.draw({1, 1, 90, 30});
-            ui::base::goTo(window.getCursorPosition().x + 1,
-                           window.getCursorPosition().y + 1);
+            editor.draw();
             ui::base::present();
         }
     } catch (std::runtime_error &e) {
