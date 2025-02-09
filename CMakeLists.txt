@@ -31,6 +31,8 @@ set(SOURCES
 	include/ui/rect.hpp
 	src/editor.cpp
 	include/editor.hpp
+	src/input/key.cpp
+	include/input/key.hpp
 )
 
 add_executable(editor ${SOURCES})

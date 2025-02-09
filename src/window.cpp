@@ -1,3 +1,4 @@
+#include <logger.hpp>
 #include <ui/base.hpp>
 #include <ui/box.hpp>
 #include <window.hpp>

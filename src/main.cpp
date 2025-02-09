@@ -29,14 +29,13 @@ int main() {
         editor.openFile("CMakeLists.txt");
         while (true) {
             auto key = input::readKey();
-            if (key) {
-                if (key == input::Key{'q'}.setCtrl(true)) {
-                    break;
-                }
-            }
+            editor.processInputKey(key);
             ui::base::clear();
             editor.draw();
             ui::base::present();
+            if (editor.shouldQuit()) {
+                break;
+            }
         }
     } catch (std::runtime_error &e) {
         Logger::get().printlnAtExit(e.what());
