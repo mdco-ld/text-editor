@@ -36,7 +36,19 @@ void Editor::draw() {
             ui::base::print("Command: ");
             ui::base::print(data.commandBuffer);
         } else {
-            ui::base::hideCursor();
+            if (!quit_) {
+                ui::base::hideCursor();
+            }
+            ui::base::goTo(1, 1);
+            ui::base::print("Help:\r\n");
+            ui::base::print("Alt-m -> Command\r\n");
+            ui::base::print("Commands:\r\n");
+            ui::base::print("quit -> Exit the program\r\n");
+            ui::base::print("open <path> -> Open file at path or create a new "
+                            "one if it doesn't exist\r\n");
+            ui::base::print("next-window -> Go to the next window in list\r\n");
+            ui::base::print(
+                "prev-window -> Go to the previous window in list\r\n");
         }
         return;
     }
