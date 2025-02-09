@@ -50,7 +50,7 @@ void Window::goBeginLine() { cursor_.x = 0; }
 
 void Window::goBegin() { cursor_.y = 0; }
 
-void Window::goEndLine() { cursor_.x = -1; }
+void Window::goEndLine() { cursor_.x = -2; }
 
 void Window::goEnd() { cursor_.y = buffer_.getNumLines() - 1; }
 

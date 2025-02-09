@@ -131,6 +131,20 @@ void Editor::processKeyNormal(input::Key key) {
         }
         return;
     }
+    if (key == Key{'e'}) {
+        if (activeWindowId_.has_value()) {
+            auto windowId = activeWindowId_.value();
+            windows_.at(windowId)->goEndLine();
+        }
+        return;
+    }
+    if (key == Key{'0'}) {
+        if (activeWindowId_.has_value()) {
+            auto windowId = activeWindowId_.value();
+            windows_.at(windowId)->goBeginLine();
+        }
+        return;
+    }
 }
 
 void Editor::processKeyEdit(input::Key key) {
@@ -202,23 +216,23 @@ void Editor::executeCommand(std::string_view command) {
         activeWindowId_ = it->first;
         return;
     }
-	if (command == "close") {
-		if (!activeWindowId_.has_value()) {
-			return;
-		}
-		auto windowId = activeWindowId_.value();
-		auto it = windows_.find(windowId);
-		it = windows_.erase(it);
-		if (windows_.empty()) {
-			activeWindowId_ = std::nullopt;
-			return;
-		}
-		if (it == windows_.end()) {
-			it = windows_.begin();
-		}
-		activeWindowId_ = it->first;
-		return;
-	}
+    if (command == "close") {
+        if (!activeWindowId_.has_value()) {
+            return;
+        }
+        auto windowId = activeWindowId_.value();
+        auto it = windows_.find(windowId);
+        it = windows_.erase(it);
+        if (windows_.empty()) {
+            activeWindowId_ = std::nullopt;
+            return;
+        }
+        if (it == windows_.end()) {
+            it = windows_.begin();
+        }
+        activeWindowId_ = it->first;
+        return;
+    }
     if (command.starts_with("open ")) {
         auto filepath = command.substr(5);
         openFile(filepath);
