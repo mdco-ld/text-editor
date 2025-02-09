@@ -9,5 +9,4 @@ cmake --build build
 ```
 
 # TODOs
-- [ ] Implement basic motions.
-- [ ] Finish implementing the input parser.
+- Finish implementing the input parser.
