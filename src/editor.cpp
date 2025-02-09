@@ -39,6 +39,7 @@ void Editor::draw() {
                         "one if it doesn't exist\r\n");
         ui::base::print("next-window -> Go to the next window in list\r\n");
         ui::base::print("prev-window -> Go to the previous window in list\r\n");
+        ui::base::print("close -> Closes the current window\r\n");
         if (mode_ == Mode::Command) {
             auto data = std::get<CommandModeData>(modeData_);
             ui::base::goTo(1, h);
@@ -201,6 +202,23 @@ void Editor::executeCommand(std::string_view command) {
         activeWindowId_ = it->first;
         return;
     }
+	if (command == "close") {
+		if (!activeWindowId_.has_value()) {
+			return;
+		}
+		auto windowId = activeWindowId_.value();
+		auto it = windows_.find(windowId);
+		it = windows_.erase(it);
+		if (windows_.empty()) {
+			activeWindowId_ = std::nullopt;
+			return;
+		}
+		if (it == windows_.end()) {
+			it = windows_.begin();
+		}
+		activeWindowId_ = it->first;
+		return;
+	}
     if (command.starts_with("open ")) {
         auto filepath = command.substr(5);
         openFile(filepath);
