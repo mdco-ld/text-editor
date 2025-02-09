@@ -64,7 +64,8 @@ void Window::draw(ui::Rect rect) {
 [[nodiscard]] Cursor &Window::getCursor() { return cursor_; }
 
 [[nodiscard]] Cursor Window::getCursorPosition() {
-    return {cursor_.x + 1, cursor_.y - offset_ + 1};
+    return {std::min(cursor_.x + 1, buffer_.getLine(cursor_.y).size() + 1),
+            cursor_.y - offset_ + 1};
 }
 
 }; // namespace editor
