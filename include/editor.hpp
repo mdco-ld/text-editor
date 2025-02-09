@@ -40,6 +40,7 @@ class Editor {
     void processKeyEdit(input::Key key);
     void processKeyCommand(input::Key key);
     void processKeySearch(input::Key key);
+    void executeCommand(std::string_view command);
 
     std::map<size_t, std::unique_ptr<Window>> windows_;
     std::optional<size_t> activeWindowId_;

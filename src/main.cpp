@@ -1,5 +1,5 @@
-#include "editor.hpp"
 #include <buffer.hpp>
+#include <editor.hpp>
 #include <input/base.hpp>
 #include <logger.hpp>
 #include <terminal.hpp>
@@ -26,7 +26,6 @@ int main() {
         ui::base::clear();
         ui::base::present();
         editor::Editor editor;
-        editor.openFile("CMakeLists.txt");
         while (true) {
             auto key = input::readKey();
             editor.processInputKey(key);

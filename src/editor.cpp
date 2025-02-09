@@ -13,6 +13,7 @@ Editor::Editor() : nextWindowId_(0), mode_(Mode::Normal), quit_(false) {}
 void Editor::openFile(std::string_view filePath) {
     auto window = std::make_unique<Window>(filePath);
     if (!std::filesystem::exists(filePath)) {
+        LOG_INFO("file does not exist, creating a new file...");
         windows_.insert({nextWindowId_, std::move(window)});
         return;
     }
@@ -27,7 +28,16 @@ void Editor::draw() {
     static size_t w = 90;
     static size_t h = 30;
     ui::base::getWindowSize(w, h);
+    ui::base::showCursor();
     if (!activeWindowId_.has_value()) {
+        if (mode_ == Mode::Command) {
+            auto data = std::get<CommandModeData>(modeData_);
+            ui::base::goTo(1, h);
+            ui::base::print("Command: ");
+            ui::base::print(data.commandBuffer);
+        } else {
+            ui::base::hideCursor();
+        }
         return;
     }
     auto windowId = activeWindowId_.value();
@@ -129,9 +139,7 @@ void Editor::processKeyCommand(input::Key key) {
         return;
     }
     if (key == Key::Special::Enter) {
-        if (data.commandBuffer == "quit") {
-            quit_ = true;
-        }
+        executeCommand(data.commandBuffer);
         mode_ = Mode::Normal;
         return;
     }
@@ -145,6 +153,46 @@ void Editor::processKeyCommand(input::Key key) {
     if (key.getChar() != 0 && !key.getAlt() && !key.getCtrl()) {
         data.commandBuffer += key.getChar();
         modeData_ = std::move(data);
+        return;
+    }
+}
+
+void Editor::executeCommand(std::string_view command) {
+    if (command.empty()) {
+        return;
+    }
+    if (command == "quit") {
+        quit_ = true;
+        return;
+    }
+    if (command == "next-window") {
+        if (!activeWindowId_.has_value()) {
+            return;
+        }
+        auto windowId = activeWindowId_.value();
+        auto it = windows_.upper_bound(windowId);
+        if (it == windows_.end()) {
+            it = windows_.begin();
+        }
+        activeWindowId_ = it->first;
+        return;
+    }
+    if (command == "prev-window") {
+        if (!activeWindowId_.has_value()) {
+            return;
+        }
+        auto windowId = activeWindowId_.value();
+        auto it = windows_.find(windowId);
+        if (it == windows_.begin()) {
+            it = windows_.end();
+        }
+        it--;
+        activeWindowId_ = it->first;
+        return;
+    }
+    if (command.starts_with("open ")) {
+        auto filepath = command.substr(5);
+        openFile(filepath);
         return;
     }
 }
