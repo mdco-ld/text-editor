@@ -37,9 +37,6 @@ Key readKey() {
     if (c == 9) {
         return Key::Special::Tab;
     }
-    if (c == 32) {
-        return Key::Special::Space;
-    }
     if (c == 13) {
         return Key::Special::Enter;
     }

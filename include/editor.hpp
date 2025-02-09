@@ -1,11 +1,11 @@
 #ifndef _EDITOR_HPP_
 #define _EDITOR_HPP_
 
+#include <input/key.hpp>
 #include <map>
 #include <memory>
 #include <string_view>
-
-#include <input/key.hpp>
+#include <variant>
 #include <window.hpp>
 
 namespace editor {
@@ -30,6 +30,12 @@ class Editor {
     [[nodiscard]] bool shouldQuit() const noexcept;
 
   private:
+    struct CommandModeData {
+        std::string commandBuffer;
+    };
+
+    using ModeData = std::variant<CommandModeData>;
+
     void processKeyNormal(input::Key key);
     void processKeyEdit(input::Key key);
     void processKeyCommand(input::Key key);
@@ -39,6 +45,7 @@ class Editor {
     std::optional<size_t> activeWindowId_;
     size_t nextWindowId_;
     Mode mode_;
+    ModeData modeData_;
     bool quit_;
 };
 

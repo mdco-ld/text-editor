@@ -53,8 +53,6 @@ std::ostream &operator<<(std::ostream &out, Key key) {
     switch (key.getSpecialChar()) {
     case Key::Special::None:
         return out << "NoKey";
-    case Key::Special::Space:
-        return out << "Space";
     case Key::Special::Enter:
         return out << "Enter";
     case Key::Special::Tab:

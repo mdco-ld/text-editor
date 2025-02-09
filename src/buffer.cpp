@@ -13,17 +13,17 @@ Buffer::Buffer(std::string_view content) { setContent(content); }
 
 void Buffer::setContent(std::string_view content) {
     lines_.clear();
-	std::string currentLine;
+    std::string currentLine;
     for (size_t pos = 0; pos < content.size(); pos++) {
         if (content[pos] == '\n') {
             lines_.emplace_back(std::move(currentLine));
         } else {
-			if (content[pos] == '\t') {
-				currentLine += std::string(4, ' ');
-			} else {
-				currentLine += content[pos];
-			}
-		}
+            if (content[pos] == '\t') {
+                currentLine += std::string(4, ' ');
+            } else {
+                currentLine += content[pos];
+            }
+        }
     }
 }
 

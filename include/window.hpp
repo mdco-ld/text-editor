@@ -37,6 +37,8 @@ class Window {
     [[nodiscard]] Cursor getCursorPosition();
 
   private:
+    void clampCursor();
+
     Buffer buffer_;
     Cursor cursor_;
     size_t offset_;

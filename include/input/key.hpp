@@ -14,19 +14,18 @@ struct Key {
 
     enum class Special {
         None = 0,
-        Space = 1u << 8,
-        Enter = 2u << 8,
-        Tab = 3u << 8,
-        Backspace = 4u << 8,
-        Insert = 5u << 8,
-        Delete = 6u << 8,
-        Home = 7u << 8,
-        End = 8u << 8,
-        Down = 9u << 8,
-        Up = 10u << 8,
-        Left = 11u << 8,
-        Right = 12u << 8,
-        Esc = 13u << 8,
+        Enter = 1u << 8,
+        Tab = 2u << 8,
+        Backspace = 3u << 8,
+        Insert = 4u << 8,
+        Delete = 5u << 8,
+        Home = 6u << 8,
+        End = 7u << 8,
+        Down = 8u << 8,
+        Up = 9u << 8,
+        Left = 10u << 8,
+        Right = 11u << 8,
+        Esc = 12u << 8,
     };
 
     bool getCtrl();

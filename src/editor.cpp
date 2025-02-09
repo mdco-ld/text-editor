@@ -46,8 +46,10 @@ void Editor::draw() {
         break;
     }
     case Mode::Command: {
+        auto data = std::get<CommandModeData>(modeData_);
         ui::base::goTo(1, h);
         ui::base::print("Command: ");
+        ui::base::print(data.commandBuffer);
         break;
     }
     }
@@ -76,6 +78,7 @@ void Editor::processKeyNormal(input::Key key) {
     using input::Key;
     if (key == Key{'m'}.setAlt(true)) {
         mode_ = Mode::Command;
+        modeData_ = CommandModeData();
         return;
     }
     if (key == Key{'j'}) {
@@ -108,18 +111,40 @@ void Editor::processKeyNormal(input::Key key) {
     }
 }
 
-void Editor::processKeyEdit([[maybe_unused]] input::Key key) {}
+void Editor::processKeyEdit(input::Key key) {
+    using input::Key;
+    if (key == Key::Special::Esc) {
+        mode_ = Mode::Normal;
+        return;
+    }
+}
 
 void Editor::processKeySearch([[maybe_unused]] input::Key key) {}
 
 void Editor::processKeyCommand(input::Key key) {
     using input::Key;
-    if (key == Key{'q'}.setAlt(true)) {
-        quit_ = true;
-        return;
-    }
+    auto data = std::get<CommandModeData>(modeData_);
     if (key == Key::Special::Esc) {
         mode_ = Mode::Normal;
+        return;
+    }
+    if (key == Key::Special::Enter) {
+        if (data.commandBuffer == "quit") {
+            quit_ = true;
+        }
+        mode_ = Mode::Normal;
+        return;
+    }
+    if (key == Key::Special::Backspace) {
+        if (data.commandBuffer.size() > 0) {
+            data.commandBuffer.pop_back();
+            modeData_ = std::move(data);
+        }
+        return;
+    }
+    if (key.getChar() != 0 && !key.getAlt() && !key.getCtrl()) {
+        data.commandBuffer += key.getChar();
+        modeData_ = std::move(data);
         return;
     }
 }

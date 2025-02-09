@@ -36,10 +36,14 @@ void Window::goRight() {
 }
 
 void Window::goLeft() {
-    cursor_.x = std::min(cursor_.x, buffer_.getLine(cursor_.y).size());
+    clampCursor();
     if (cursor_.x > 0) {
         cursor_.x--;
     }
+}
+
+void Window::clampCursor() {
+    cursor_.x = std::min(cursor_.x, buffer_.getLine(cursor_.y).size());
 }
 
 void Window::goBeginLine() { cursor_.x = 0; }
