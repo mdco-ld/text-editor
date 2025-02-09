@@ -30,6 +30,15 @@ void Editor::draw() {
     ui::base::getWindowSize(w, h);
     ui::base::showCursor();
     if (!activeWindowId_.has_value()) {
+        ui::base::goTo(1, 1);
+        ui::base::print("Help:\r\n");
+        ui::base::print("Alt-m -> Command\r\n");
+        ui::base::print("Commands:\r\n");
+        ui::base::print("quit -> Exit the program\r\n");
+        ui::base::print("open <path> -> Open file at path or create a new "
+                        "one if it doesn't exist\r\n");
+        ui::base::print("next-window -> Go to the next window in list\r\n");
+        ui::base::print("prev-window -> Go to the previous window in list\r\n");
         if (mode_ == Mode::Command) {
             auto data = std::get<CommandModeData>(modeData_);
             ui::base::goTo(1, h);
@@ -39,16 +48,6 @@ void Editor::draw() {
             if (!quit_) {
                 ui::base::hideCursor();
             }
-            ui::base::goTo(1, 1);
-            ui::base::print("Help:\r\n");
-            ui::base::print("Alt-m -> Command\r\n");
-            ui::base::print("Commands:\r\n");
-            ui::base::print("quit -> Exit the program\r\n");
-            ui::base::print("open <path> -> Open file at path or create a new "
-                            "one if it doesn't exist\r\n");
-            ui::base::print("next-window -> Go to the next window in list\r\n");
-            ui::base::print(
-                "prev-window -> Go to the previous window in list\r\n");
         }
         return;
     }

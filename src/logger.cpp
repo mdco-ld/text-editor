@@ -1,9 +1,13 @@
 #include <logger.hpp>
 
+#include <filesystem>
 #include <iostream>
 
 std::string_view getLogFile() {
     // TODO: Make this find a proper log file
+    if (!std::filesystem::exists("debug")) {
+        std::filesystem::create_directory("debug");
+    }
     return "debug/logs.txt";
 }
 
