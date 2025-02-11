@@ -78,4 +78,20 @@ void Buffer::draw(size_t startOffset, ui::Rect rect) {
     }
 }
 
+void Buffer::insertCharacter(char c, size_t line, size_t position) {
+    lines_[line].insert(lines_[line].begin() + position, c);
+}
+
+void Buffer::eraseCharacter(size_t line, size_t position) {
+    lines_[line].erase(lines_[line].begin() + position);
+}
+
+void Buffer::insertLine(size_t lineIdx) {
+    lines_.insert(lines_.begin() + lineIdx, std::string());
+}
+
+void Buffer::eraseLine(size_t lineIdx) {
+    lines_.erase(lines_.begin() + lineIdx);
+}
+
 }; // namespace editor

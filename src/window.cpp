@@ -14,6 +14,48 @@ void Window::setContent(std::string_view content) {
     buffer_.setContent(content);
 }
 
+void Window::insertLine(size_t idx) { buffer_.insertLine(idx); }
+
+void Window::insertLineUnderCursor() { insertLine(cursor_.y + 1); }
+
+void Window::eraseLine(size_t idx) { buffer_.eraseLine(idx); }
+
+void Window::eraseLineAtCursor() {
+    eraseLine(cursor_.y);
+    if (cursor_.y == buffer_.getNumLines()) {
+        goUp();
+    }
+}
+
+void Window::insertCharacter(char c, size_t line, size_t position) {
+    buffer_.insertCharacter(c, line, position);
+}
+
+void Window::insertCharacterAtCursor(char c, bool moveCursor) {
+    clampCursorPosition();
+    insertCharacter(c, cursor_.y, cursor_.x);
+    if (moveCursor) {
+        goRight();
+    }
+}
+
+void Window::eraseCharacter(size_t line, size_t position) {
+    buffer_.eraseCharacter(line, position);
+}
+
+void Window::eraseCharacterAtCursor(bool moveCursor) {
+    clampCursorPosition();
+    if (moveCursor) {
+        if (cursor_.x == 0) {
+            return;
+        }
+        goLeft();
+        eraseCharacter(cursor_.y, cursor_.x);
+    } else {
+        eraseCharacter(cursor_.y, cursor_.x);
+    }
+}
+
 void Window::goDown() {
     size_t numLines = buffer_.getNumLines();
     if (cursor_.y + 1 < numLines) {
@@ -36,13 +78,13 @@ void Window::goRight() {
 }
 
 void Window::goLeft() {
-    clampCursor();
+    clampCursorPosition();
     if (cursor_.x > 0) {
         cursor_.x--;
     }
 }
 
-void Window::clampCursor() {
+void Window::clampCursorPosition() {
     cursor_.x = std::min(cursor_.x, buffer_.getLine(cursor_.y).size());
 }
 

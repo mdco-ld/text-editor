@@ -26,6 +26,11 @@ class Buffer {
 
     void draw(size_t startOffset, ui::Rect rect);
 
+    void insertCharacter(char c, size_t line, size_t position);
+    void eraseCharacter(size_t line, size_t position);
+    void insertLine(size_t lineIdx);
+    void eraseLine(size_t lineIdx);
+
   private:
     // TODO: Refactor to use a splay tree instead of std::vector
     std::vector<std::string> lines_;

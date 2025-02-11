@@ -33,11 +33,22 @@ class Window {
 
     void setContent(std::string_view content);
 
+    void insertLine(size_t lineIdx);
+    void insertLineUnderCursor();
+    void insertLineAboveCursor();
+    void eraseLine(size_t lineIdx);
+    void eraseLineAtCursor();
+
+    void insertCharacter(char c, size_t line, size_t position);
+    void insertCharacterAtCursor(char c, bool move = true);
+    void eraseCharacter(size_t line, size_t position);
+    void eraseCharacterAtCursor(bool move = true);
+
     [[nodiscard]] Cursor &getCursor();
     [[nodiscard]] Cursor getCursorPosition();
 
   private:
-    void clampCursor();
+    void clampCursorPosition();
 
     Buffer buffer_;
     Cursor cursor_;

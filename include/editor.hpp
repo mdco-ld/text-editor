@@ -42,6 +42,8 @@ class Editor {
     void processKeySearch(input::Key key);
     void executeCommand(std::string_view command);
 
+    Window *getActiveWindow();
+
     std::map<size_t, std::unique_ptr<Window>> windows_;
     std::optional<size_t> activeWindowId_;
     size_t nextWindowId_;

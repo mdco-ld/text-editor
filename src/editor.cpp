@@ -56,12 +56,10 @@ void Editor::draw() {
     auto activeWindow = windows_.at(windowId).get();
     activeWindow->draw({1, 1, w, h - 1});
     switch (mode_) {
+    case Mode::Edit:
     case Mode::Normal: {
         auto cursor = activeWindow->getCursorPosition();
         ui::base::goTo(cursor.x + 1, cursor.y + 1);
-        break;
-    }
-    case Mode::Edit: {
         break;
     }
     case Mode::Search: {
@@ -103,46 +101,58 @@ void Editor::processKeyNormal(input::Key key) {
         modeData_ = CommandModeData();
         return;
     }
+    if (key == Key{'i'}) {
+        mode_ = Mode::Edit;
+        return;
+    }
     if (key == Key{'j'}) {
-        if (activeWindowId_.has_value()) {
-            size_t windowId = activeWindowId_.value();
-            windows_.at(windowId)->goDown();
+        auto window = getActiveWindow();
+        if (window != nullptr) {
+            window->goDown();
         }
         return;
     }
     if (key == Key{'k'}) {
-        if (activeWindowId_.has_value()) {
-            size_t windowId = activeWindowId_.value();
-            windows_.at(windowId)->goUp();
+        auto window = getActiveWindow();
+        if (window != nullptr) {
+            window->goUp();
         }
         return;
     }
     if (key == Key{'l'}) {
-        if (activeWindowId_.has_value()) {
-            size_t windowId = activeWindowId_.value();
-            windows_.at(windowId)->goRight();
+        auto window = getActiveWindow();
+        if (window != nullptr) {
+            window->goRight();
         }
         return;
     }
     if (key == Key{'h'}) {
-        if (activeWindowId_.has_value()) {
-            size_t windowId = activeWindowId_.value();
-            windows_.at(windowId)->goLeft();
+        auto window = getActiveWindow();
+        if (window != nullptr) {
+            window->goLeft();
         }
         return;
     }
     if (key == Key{'e'}) {
-        if (activeWindowId_.has_value()) {
-            auto windowId = activeWindowId_.value();
-            windows_.at(windowId)->goEndLine();
+        auto window = getActiveWindow();
+        if (window != nullptr) {
+            window->goEndLine();
         }
         return;
     }
     if (key == Key{'0'}) {
-        if (activeWindowId_.has_value()) {
-            auto windowId = activeWindowId_.value();
-            windows_.at(windowId)->goBeginLine();
+        auto window = getActiveWindow();
+        if (window != nullptr) {
+            window->goBeginLine();
         }
+        return;
+    }
+    if (key == Key{'o'}) {
+        auto window = getActiveWindow();
+        if (window == nullptr) {
+            return;
+        }
+        window->insertLineUnderCursor();
         return;
     }
 }
@@ -151,6 +161,23 @@ void Editor::processKeyEdit(input::Key key) {
     using input::Key;
     if (key == Key::Special::Esc) {
         mode_ = Mode::Normal;
+        return;
+    }
+    if (key == Key::Special::Backspace) {
+        auto window = getActiveWindow();
+        if (window == nullptr) {
+            return;
+        }
+        window->eraseCharacterAtCursor();
+        return;
+    }
+    if (key.getChar() != 0 && !key.getCtrl() && !key.getAlt()) {
+        auto window = getActiveWindow();
+        if (window == nullptr) {
+            return;
+        }
+        char c = key.getChar();
+        window->insertCharacterAtCursor(c);
         return;
     }
 }
@@ -238,6 +265,18 @@ void Editor::executeCommand(std::string_view command) {
         openFile(filepath);
         return;
     }
+}
+
+Window *Editor::getActiveWindow() {
+    if (!activeWindowId_.has_value()) {
+        return nullptr;
+    }
+    auto windowId = activeWindowId_.value();
+    auto window = windows_.find(windowId);
+    if (window == windows_.end()) {
+        return nullptr;
+    }
+    return window->second.get();
 }
 
 }; // namespace editor
