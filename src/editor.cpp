@@ -153,6 +153,26 @@ void Editor::processKeyNormal(input::Key key) {
             return;
         }
         window->insertLineUnderCursor();
+        window->goDown();
+        mode_ = Mode::Edit;
+        return;
+    }
+    if (key == Key{'O'}) {
+        auto window = getActiveWindow();
+        if (window == nullptr) {
+            return;
+        }
+        window->insertLineAboveCursor();
+        window->goUp();
+        mode_ = Mode::Edit;
+        return;
+    }
+    if (key == Key{'d'}) {
+        auto window = getActiveWindow();
+        if (window == nullptr) {
+            return;
+        }
+        window->eraseLineAtCursor();
         return;
     }
 }

@@ -18,11 +18,16 @@ void Window::insertLine(size_t idx) { buffer_.insertLine(idx); }
 
 void Window::insertLineUnderCursor() { insertLine(cursor_.y + 1); }
 
+void Window::insertLineAboveCursor() {
+    insertLine(cursor_.y);
+    goDown();
+}
+
 void Window::eraseLine(size_t idx) { buffer_.eraseLine(idx); }
 
 void Window::eraseLineAtCursor() {
     eraseLine(cursor_.y);
-    if (cursor_.y == buffer_.getNumLines()) {
+    while (cursor_.y >= buffer_.getNumLines()) {
         goUp();
     }
 }
